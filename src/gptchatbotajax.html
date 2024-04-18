@@ -50,7 +50,7 @@
     sendBtn.addEventListener('click', () => {
       const userMessage = userInput.value.trim();
       if (userMessage !== '') {
-        sendAjax("https://www.theage.com.au", "", ajaxReturned)
+        sendAjax("https://nga-d-weu-genai-rag-api.azurewebsites.net/api/models", "", ajaxReturned)
         appendMessage('You', userMessage);
         botResponse(userMessage);
         userInput.value = '';
