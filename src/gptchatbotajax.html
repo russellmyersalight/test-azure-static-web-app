@@ -51,11 +51,11 @@
       const userMessage = userInput.value.trim();
       if (userMessage !== '') {
         var website = "https://nga-d-weu-genai-rag-api.azurewebsites.net/api/generatetext";
-        website += "?co";
-        website += "de=";
-        website += "oyFJnhfpRUtkjyiaVKasMWiI";
-        website += "BwlWdohmrzf21Nrt4bncAzFuNCCOtA==";
-        sendAjax(website, "", ajaxReturned, method="POST");
+        params += "co";
+        params += "de=";
+        params += "oyFJnhfpRUtkjyiaVKasMWiI";
+        params += "BwlWdohmrzf21Nrt4bncAzFuNCCOtA==";
+        sendAjax(website, params, ajaxReturned, method="POST");
         appendMessage('You', userMessage);
         botResponse(userMessage);
         userInput.value = '';
