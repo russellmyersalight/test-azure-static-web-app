@@ -50,7 +50,7 @@
     sendBtn.addEventListener('click', () => {
       const userMessage = userInput.value.trim();
       if (userMessage !== '') {
-        sendAjax("http://www.theage.com.au", "", ajaxReturned)
+        sendAjax("https://www.theage.com.au", "", ajaxReturned)
         appendMessage('You', userMessage);
         botResponse(userMessage);
         userInput.value = '';
