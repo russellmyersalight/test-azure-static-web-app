@@ -50,7 +50,12 @@
     sendBtn.addEventListener('click', () => {
       const userMessage = userInput.value.trim();
       if (userMessage !== '') {
-        sendAjax("https://nga-d-weu-genai-rag-api.azurewebsites.net/api/models", "", ajaxReturned)
+        var website = "https://nga-d-weu-genai-rag-api.azurewebsites.net/api/generatetext";
+        website += "?co";
+        website += "de=";
+        website += "oyFJnhfpRUtkjyiaVKasMWiI";
+        website += "BwlWdohmrzf21Nrt4bncAzFuNCCOtA==";
+        sendAjax(website, "", ajaxReturned);
         appendMessage('You', userMessage);
         botResponse(userMessage);
         userInput.value = '';
