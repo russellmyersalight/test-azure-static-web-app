@@ -15,9 +15,15 @@
       margin-bottom: 10px;
     }
     .typing-text {
+      <!--font-size: 24px;-->
+      font-family: monospace;
+    }
+
+    .dots {
       font-size: 24px;
       font-family: monospace;
     }
+
   </style>
 </head>
 <body>
@@ -29,7 +35,7 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-10">
-                  <span>Alight Help Centre Chatbot <small><small><small>v0.1.1b</small></small></small></span>
+                  <span>Alight Help Centre Chatbot <small><small><small>v0.1.1c</small></small></small></span>
               </div>
               <div class="col-md-2">
                  <img width=70 height=35 src="./img/alight_lightbulb.png"></img>
@@ -109,7 +115,7 @@
     function appendMessage(sender, message) {
       const messageElement = document.createElement('p');
       messageElement.classList.add('message');
-      messageElement.innerHTML = `<strong>${sender}:</strong> `;
+      messageElement.innerHTML = `<strong>${(sender == 'Chatbot' ? 'Chatbot' : sender) }:</strong> `;
       chatContainer.appendChild(messageElement);
 
       if (sender == 'Chatbot') {
@@ -153,7 +159,8 @@
     function typingEffect(el) {
         let dots = 0;
         return setInterval(() => {
-          el.textContent = "" + ".".repeat(dots);
+          //el.textContent = "`<strong>${(sender == 'Chatbot' ? 'HC Chatbot' : sender) }:</strong> `;" + ".".repeat(dots);
+          el.innerHTML = "<strong>Chatbot: </strong>" + "<span class ='dots'>" + ".".repeat(dots) + "</span>";
           dots = (dots + 1) % 4; // Reset dots after the third dot
         }, 500); // Change typing speed here (milliseconds)
       }
