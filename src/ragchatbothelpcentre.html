@@ -35,7 +35,7 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-10">
-                  <span>Alight Help Centre Chatbot <small><small><small>v0.1.1c</small></small></small></span>
+                  <span>Alight Help Centre Chatbot <small><small><small>v0.1.1d</small></small></small></span>
               </div>
               <div class="col-md-2">
                  <img width=70 height=35 src="./img/alight_lightbulb.png"></img>
@@ -87,13 +87,16 @@
       const userMessage = userInput.value.trim();
       if (userMessage !== '') {
         //var website =  "http://localhost:7071/api/generatetext"; //"https://nga-d-weu-genai-rag-api.azurewebsites.net/api/generatetext";
-        var website =  "https://nga-d-weu-genai-rag-api.azurewebsites.net/api/generatetext";
+        //var website =  "https://nga-d-weu-genai-rag-api.azurewebsites.net/api/generatetext";
+        var website = "https://alg-t-weu-genai-rag-api-05.azurewebsites.net/api/generatetext";
 
         params = "fred=blah"
         params = "co";
         params += "de=";
-        params += "oyFJnhfpRUtkjyiaVKasMWiI";
-        params += "BwlWdohmrzf21Nrt4bncAzFuNCCOtA==";
+        //params += "oyFJnhfpRUtkjyiaVKasMWiI";
+        //params += "BwlWdohmrzf21Nrt4bncAzFuNCCOtA==";
+        params += "NJZ1DnEv91oScvXc2ELp_5V1ftos";
+        params += "VtDeKIklzmM3k7etAzFuWMO6sQ==";
         sendAjax(website, params, ajaxReturned, method="POST", payload=assemble_params(userMessage, chatHandle=chatHandle));
         appendMessage('You', userMessage);
         //botResponse(userMessage);
