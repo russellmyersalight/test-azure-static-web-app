@@ -1,0 +1,18 @@
+
+    .chat-container {
+      height: 400px;
+      overflow-y: scroll;
+    }
+    .message {
+      margin-bottom: 10px;
+    }
+    .typing-text {
+      <!--font-size: 24px;-->
+      font-family: monospace;
+    }
+
+    .dots {
+      font-size: 24px;
+      font-family: monospace;
+    }
+

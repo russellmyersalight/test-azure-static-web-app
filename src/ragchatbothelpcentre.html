@@ -3,28 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chatbot</title>
+  <title>Alight Help Centre Chatbot</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!--link rel="stylesheet" type="text/css" href="./css/styles.css"-->
+  <link rel="stylesheet" type="text/css" href="./css/ragchatstyles.css">
   <link rel="icon" href="./img/chatbot-ai-assist.png">
-  <style>
-    .chat-container {
-      height: 400px;
-      overflow-y: scroll;
-    }
-    .message {
-      margin-bottom: 10px;
-    }
-    .typing-text {
-      <!--font-size: 24px;-->
-      font-family: monospace;
-    }
-
-    .dots {
-      font-size: 24px;
-      font-family: monospace;
-    }
-
-  </style>
 </head>
 <body>
 
@@ -35,7 +18,7 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-10">
-                  <span>Alight Help Centre Chatbot <small><small><small>v0.1.1d</small></small></small></span>
+                  <span>Alight Help Centre Chatbot <small><small><small>v0.1.2</small></small></small></span>
               </div>
               <div class="col-md-2">
                  <img width=70 height=35 src="./img/alight_lightbulb.png"></img>
@@ -43,7 +26,6 @@
             </div>
           </div>
           <div class="card-body chat-container" id="chat-container">
-            <p class="message"><i>Hello! How can I assist you with queries on the Alight Help Centre?</i></p>
           </div>
           <div class="card-footer">
             <div class="input-group">
@@ -74,225 +56,21 @@
   <!-- Bootstrap Icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
+  <!-- javascript source files -->
+  <script src="./js/model.js"></script>
+  <script src="./js/eventlisteners.js"></script>
+  <script src="./js/view.js"></script>
+  <script src="./js/utils.js"></script>
+
+
   <script>
-    const chatContainer = document.getElementById('chat-container');
-    const userInput = document.getElementById('user-input');
-    const sendBtn = document.getElementById('send-btn');
-    const clearBtn = document.getElementById('clear-btn');
+
     setChatHandle("");
-    //var chatHandle = "";
-
-
-    sendBtn.addEventListener('click', () => {
-      const userMessage = userInput.value.trim();
-      if (userMessage !== '') {
-        //var website =  "http://localhost:7071/api/generatetext"; //"https://nga-d-weu-genai-rag-api.azurewebsites.net/api/generatetext";
-        //var website =  "https://nga-d-weu-genai-rag-api.azurewebsites.net/api/generatetext";
-        var website = "https://alg-t-weu-genai-rag-api-05.azurewebsites.net/api/generatetext";
-
-        params = "fred=blah"
-        params = "co";
-        params += "de=";
-        //params += "oyFJnhfpRUtkjyiaVKasMWiI";
-        //params += "BwlWdohmrzf21Nrt4bncAzFuNCCOtA==";
-        params += "NJZ1DnEv91oScvXc2ELp_5V1ftos";
-        params += "VtDeKIklzmM3k7etAzFuWMO6sQ==";
-        sendAjax(website, params, ajaxReturned, method="POST", payload=assemble_params(userMessage, chatHandle=chatHandle));
-        appendMessage('You', userMessage);
-        //botResponse(userMessage);
-        userInput.value = '';
-      }
-    });
-    clearBtn.addEventListener('click', () => {
-         chatContainer.innerHTML = "<p className=\"message\"><i>Hello! How can I assist you with queries on the Alight Help centre?</i></p>";
-         //chatHandle = "";
-         setChatHandle("");
-
-          // var firstChild = chatContainer.firstChild;
-          // // Loop through all child nodes after the first one and remove them
-          // while (chatContainer.childNodes.length > 1) {
-          //     chatContainer.removeChild(chatContainer.lastChild);
-          // }
-    });
-
-    function appendMessage(sender, message) {
-      const messageElement = document.createElement('p');
-      messageElement.classList.add('message');
-      messageElement.innerHTML = `<strong>${(sender == 'Chatbot' ? 'Chatbot' : sender) }:</strong> `;
-      chatContainer.appendChild(messageElement);
-
-      if (sender == 'Chatbot') {
-        result  = findAndStrip(message, /\[.*?\]/);
-        message = result[0];
-        citations = result[1];
-
-      }
-
-
-      // Typewriter effect
-
-      var useTypewriter = false;
-      if (sender == 'Chatbot') {
-          useTypewriter = true;
-      }
-      if (useTypewriter) {
-        removeElementsByClass("typing-text");
-        let i = 0;
-        const typingEffect = setInterval(() => {
-          messageElement.innerHTML += message[i];
-          i++;
-          if (i === message.length) {
-            clearInterval(typingEffect);
-            if (citations != null) {
-              messageElement.innerHTML += ('<br>' + citations);
-            }
-          }
-        }, 20);
-      }
-      else {
-        messageElement.innerHTML += message;
-        const messageTypingElement = document.createElement('p');
-        messageTypingElement.classList.add('typing-text');
-        const typingInterval = typingEffect(messageTypingElement);
-        chatContainer.appendChild(messageTypingElement);
-      }
-    }
-
-      // Function to create the someone is typing effect
-    function typingEffect(el) {
-        let dots = 0;
-        return setInterval(() => {
-          //el.textContent = "`<strong>${(sender == 'Chatbot' ? 'HC Chatbot' : sender) }:</strong> `;" + ".".repeat(dots);
-          el.innerHTML = "<strong>Chatbot: </strong>" + "<span class ='dots'>" + ".".repeat(dots) + "</span>";
-          dots = (dots + 1) % 4; // Reset dots after the third dot
-        }, 500); // Change typing speed here (milliseconds)
-      }
-
-    function botResponse(userMessage) {
-      // Simple logic to generate bot response
-      let response = '';
-      if (userMessage.toLowerCase().includes('hello') || userMessage.toLowerCase().includes('hi')) {
-        response = 'Hello there!';
-      } else {
-        response = "I'm sorry, I didn't understand that.";
-
-      }
-      response=userMessage;
-      setTimeout(() => {
-        appendMessage('Chatbot', response);
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-      }, 50);//userMessage.length * 50);
-    }
-
-    function findAndStrip(inputString, regex) {
-    // Find the matching pattern
-      const match = inputString.match(regex);
-
-      if (match) {
-          // Strip the matched part from the input string
-          const strippedString = inputString.replace(regex, '');
-
-          // Return the matched part
-          return [strippedString, match[0]];
-      } else {
-          return [inputString, null]; // No match found
-      }
-    }
-
-
-    function removeElementsByClass(className){
-      const elements = document.getElementsByClassName(className);
-      while(elements.length > 0){
-          elements[0].parentNode.removeChild(elements[0]);
-      }
-    }
-
-   function setChatHandle(ch) {
-      chatHandle = ch;
-      document.getElementById("chat-handle").innerHTML = ch == "" ?  "" : ("Chat handle: " + ch);
-
-   }
-
-    function ajaxReturned(xmlhttp) {
-        var parsed = JSON.parse(xmlhttp.responseText);
-        console.log('Got stuff. Result: ' + parsed["GeneratedText"]);
-        //document.getElementById("existsLabel").innerHTML = parsed["gameExists"] ? "Already played!" : ".";
-        //var res = parsed["GeneratedText"].match(/\[Cit.*?\]/)[0];
-       // res = JSON.parse(res);
-
-
-        botResponse(parsed["GeneratedText"]);
-        setChatHandle(parsed["Chat"]["ChatHandle"]);
-        //chatHandle = parsed["Chat"]["ChatHandle"];
-        //document.getElementById(("chat-handle")).innerHTML = "Chat handle: " + chatHandle;
-        return parsed
-
-
-    }
-
-    function assemble_params(prompt, chatHandle="") {
-         var payload = {
-          "UserParams": {
-            "SuppliedPrompt": prompt
-          },
-          "TechnicalParams": {
-            "type": "ragchat",
-            "SearchIndexName": "demo_help_centre",
-            "ReturnSystemMessage": true,
-            "ChatHandle": chatHandle
-          }
-         }
-         return payload;
-
-
-    }
-
-    function sendAjax(url, params, callback, method='GET', payload=null) {
-        var xmlhttp;
-
-        if(window.XMLHttpRequest){
-            xmlhttp = new XMLHttpRequest();
-        }else{
-            xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
-        }
-
-
-        xmlhttp.onreadystatechange = function(){
-            if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
-                callback(xmlhttp);
-            }
-        }
-
-        xmlhttp.open(method,url + '?' + params,true);
-        if (payload === null) {
-
-        }
-        else {
-          xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-        }
-
-
-        if (payload === null) {
-          xmlhttp.send();
-        }
-        else {
-          xmlhttp.send(JSON.stringify(payload));
-        }
-    //     data =  {
-    //           "UserParams": {
-    //             "DocumentType": "policy",
-    //             "Topic": "dress",
-    //             "Purpose": "Dress code is formal",
-    //             "CompanyName": "Alight"
-    //           },
-    //           "OutputParams": {
-    //             "OutputTone": "casual",
-    //           }
-    //     };
-    //
-     }
-
+    sendBtn.addEventListener('click', sendButtonClicked);
+    clearBtn.addEventListener('click', clearChatButtonClicked);
+    initChatContainerHTML();
 
   </script>
+
 </body>
 </html>
