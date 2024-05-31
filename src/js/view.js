@@ -2,6 +2,8 @@
     const userInput = document.getElementById('user-input');
     const sendBtn = document.getElementById('send-btn');
     const clearBtn = document.getElementById('clear-btn');
+    const tBody = document.getElementById('technical-table-body');
+    const techInfoButton = document.getElementById('tech-info-button');
 
 
     function appendChatBotResponseMessage(messageElement, message) {
@@ -118,12 +120,76 @@
         document.getElementById("chat-handle").innerHTML = ch == "" ?  "" : ("Chat handle: " + ch);
     }
 
+    function showTechInfo(parsed) {
+        j = parsed.TechnicalParamsUsed;
+        var usefulParams = ["AIService", "APICodeVersion", 'Embedding Model (relevant for type "ragchat" only)',
+                             "Azure OpenAI endpoint used (relevant for AIService AzureOpenAI only)", "Model", "type"];
+        var infoTable = [["Chat Handle", parsed.Chat["ChatHandle"]], ['Chat Num', parsed.Chat["ChatNum"]]];
+        for (const [key, value] of Object.entries(j)) {
+           var row = [key, JSON.stringify(value)];
+           infoTable.push(row);
+        }
+
+        if ("ContextList" in parsed) {
+             var searchScores = [];
+             j2 = parsed.ContextList;
+             for (item of j2) {
+                 searchScores.push(item["search_score"].toFixed(3));
+             }
+             var searchScoresStr = searchScores.join(', ');
+             infoTable.push(["SearchScores", searchScoresStr]);
+
+
+        }
+
+
+        for (i=0;i<infoTable.length;++i) {
+            infoTable[i][0] = infoTable[i][0].replace('(relevant for type "ragchat" only)', '');
+            infoTable[i][0] = infoTable[i][0].replace('(relevant for AIService AzureOpenAI only)', '');
+        }
+
+
+        populateTable(infoTable);
+
+
+    }
+
+    // Function to delete all rows from the technical info table
+    function deleteAllRows() {
+        tBody.innerHTML = ''; // Clear all rows
+        var row = tBody.insertRow();
+          row.insertCell(0).textContent = '';
+          row.insertCell(1).textContent = 'Query in process';
+
+    }
+
+      // Function to populate the table with JSON data
+    function populateTable(data) {
+        tBody.innerHTML = ''; // Clear existing rows
+
+
+        data.forEach(function(item) {
+          var row = tBody.insertRow();
+          row.insertCell(0).textContent = item[0];
+          row.insertCell(1).textContent = item[1];
+
+        });
+    }
+
+
     function clearUserInput() {
         userInput.value = '';
     }
 
     function initChatContainerHTML() {
-        chatContainer.innerHTML = "<p className=\"message\"><i>Hello! How can I assist you with queries on the Alight Help centre?</i></p>";
+        chatContainer.innerHTML = "<p className=\"message\"><i>Hello! How can I assist you with queries on the Alight Help centre?</i>";  //<br><br><small><i>(Hint: Click 'clear chat' button when changing conversation topics for better performance)</i></small></p>";
+    }
+
+    function toggleTechInfo() {
+        techInfoDiv = document.getElementById("tech-info-div");
+        techInfoDiv.style.visibility = showTechnicalInfo ? 'visible' : 'hidden';
+
+
     }
 
 

@@ -1,8 +1,14 @@
 
     .chat-container {
-      height: 400px;
+      height: 360px;
       overflow-y: scroll;
     }
+
+    .tech-table-container {
+      height: 360px;
+      overflow-y: scroll;
+    }
+
     .message {
       margin-bottom: 10px;
     }
@@ -14,5 +20,9 @@
     .dots {
       font-size: 24px;
       font-family: monospace;
+    }
+
+    .table-v-small-text {
+        font-size: 12px;
     }
 
