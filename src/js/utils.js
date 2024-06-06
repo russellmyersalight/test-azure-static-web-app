@@ -32,22 +32,22 @@
       }
     }
 
-    function getDestUrl(destination) {
+    function getDestUrl(destination, endpoint="generatetext") {
 
         switch (destination) {
             case "localhost":
-                website = "http://localhost:7071/api/generatetext";
+                website = "http://localhost:7071/api/" + endpoint;
                 params = "fred=blah"
                 break;
             case "dev":
-                website = "https://nga-d-weu-genai-rag-api.azurewebsites.net/api/generatetext"
+                website = "https://nga-d-weu-genai-rag-api.azurewebsites.net/api/" + endpoint;
                 params = "co";
                 params += "de=";
                 params += "oyFJnhfpRUtkjyiaVKasMWiI";
                 params += "BwlWdohmrzf21Nrt4bncAzFuNCCOtA==";
                 break;
             case "newdev":
-                website = "https://alg-t-weu-genai-rag-api-05.azurewebsites.net/api/generatetext"
+                website = "https://alg-t-weu-genai-rag-api-05.azurewebsites.net/api/" + endpoint;
                 params = "co";
                 params += "de=";
                 params += "NJZ1DnEv91oScvXc2ELp_5V1ftos";

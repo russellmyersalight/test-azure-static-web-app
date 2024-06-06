@@ -18,7 +18,7 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-9">
-                  <span>Alight Help Centre Chatbot <small><small><small><button class="btn btn-sm btn-link" data-toggle="modal" data-target="#exampleModal" title="Show change log"><small>v0.1.3<small></small></button></small></small></small></span>
+                  <span>Alight Help Centre Chatbot <small><small><small><button class="btn btn-sm btn-link" data-toggle="modal" data-target="#exampleModal" title="Show change log"><small><small>v0.1.4</small></small></button></small></small></small></span>
               </div>
               <div class="col-md-2">
                 <button class="btn" id="tech-info-button" title="Show technical info"><img width="71" height="50" src="./img/chatbot_icon2.png"></img></button>
@@ -41,7 +41,11 @@
                 <button class="btn btn-secondary btn-sm" id="clear-btn" title="Hint: Click 'clear chat' button when changing conversation topics for better performance">Clear Chat</button>
 
               </div>
-              <div class="col-md-4">
+              <div class="col-md-4" id="ratings-buttons" style="visibility: hidden">
+                 <button class="btn btn-warning btn-sm ratings-button" title="Not good" value = 1 onclick="ratingsButtonClicked(this);">&#128078;</button> <!--&#128542;</button-->
+                 <button class="btn btn-info btn-sm ratings-button" title="Ok" value = 3 onclick="ratingsButtonClicked(this);">&#128578;</button>
+                 <button class="btn btn-primary btn-sm ratings-button" title="Good" value = 5 onclick="ratingsButtonClicked(this);">&#128077;</button> <!--&#128525;</button-->
+
               </div>
               <div class="col-md-4">
                   <small><small><span id="chat-handle">Chat handle: </span></small></small>
@@ -50,6 +54,7 @@
           </div>
         </div>
       </div>
+    <span><small><small><small><small><span id="feedback-logged"></span></small></small></small></small></span>
     </div>
       <div id="tech-info-div" class="col-md-3 tech-table-container border border-secondary" style='visibility: hidden'>
          <h4>Technical Info</h4>
@@ -77,7 +82,9 @@
             </tbody>
           </table>
       </div>
+
   </div>
+
 </div>
 
 
@@ -112,7 +119,10 @@
           - Queries + AI responses now (anonymously) logged to cosmos db for analysis<br>
           - Cofax-formatted Help Centre PDFs now loaded into search index (90% done)<br>
           - Help Centre individual active web pages (aspx) now loaded into search index (instead of "word build")
-
+          <hr>
+          <b>v0.1.4</b> (6/6/24)
+          <br>
+          Added ability for user to give feedback on query responses (thumbs up, neutral, thumbs down)
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -136,6 +146,7 @@
   <script>
 
     setChatHandle("");
+    setChatNum(-1);
     sendBtn.addEventListener('click', sendButtonClicked);
     clearBtn.addEventListener('click', clearChatButtonClicked);
     userInput.addEventListener('keydown',userInputDone);

@@ -25,6 +25,7 @@
             if (citations != null) {
               messageElement.innerHTML += ('<br>' + citations);
             }
+            document.getElementById("ratings-buttons").style.visibility = "visible";
           }
           messageElement.scrollIntoView(false);
         }, 20);
@@ -90,6 +91,7 @@
             if (citations != null) {
               messageElement.innerHTML += ('<br>' + citations);
             }
+
           }
         }, 20);
 

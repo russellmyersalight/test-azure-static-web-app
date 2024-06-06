@@ -26,3 +26,9 @@
         font-size: 12px;
     }
 
+    .ratings-button {
+      background-color: transparent;
+      //border: none;
+
+    }
+
