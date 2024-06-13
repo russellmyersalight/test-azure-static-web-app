@@ -19,6 +19,7 @@
         initChatContainerHTML();
         setChatHandle("");
         setChatNum(-1);
+        document.getElementById("ratings-buttons").style.visibility = "hidden";
 
     }
 
