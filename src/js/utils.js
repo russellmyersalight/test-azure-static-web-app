@@ -41,17 +41,11 @@
                 break;
             case "dev":
                 website = "https://nga-d-weu-genai-rag-api.azurewebsites.net/api/" + endpoint;
-                params = "co";
-                params += "de=";
-                params += "oyFJnhfpRUtkjyiaVKasMWiI";
-                params += "BwlWdohmrzf21Nrt4bncAzFuNCCOtA==";
+                params = "";
                 break;
             case "newdev":
                 website = "https://alg-t-weu-genai-rag-api-05.azurewebsites.net/api/" + endpoint;
-                params = "co";
-                params += "de=";
-                params += "NJZ1DnEv91oScvXc2ELp_5V1ftos";
-                params += "VtDeKIklzmM3k7etAzFuWMO6sQ==";
+                params = "";
                 break;
         }
 
@@ -67,6 +61,7 @@
           },
           "TechnicalParams": {
             "type": "ragchat",
+            //"Model": "gpt-4o",
             "SearchIndexName": "demo_help_centre",
             "ReturnSystemMessage": true,
             "ChatHandle": chatHandle
@@ -91,6 +86,10 @@
             if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
                 callback(xmlhttp);
             }
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 500) {
+                console.log("error 500 encountered");
+                callback(xmlhttp);
+            }
         }
 
         xmlhttp.open(method,url + '?' + params,true);
@@ -98,8 +97,15 @@
             xmlhttp.send();
         }
         else {
-          xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-          xmlhttp.send(JSON.stringify(payload));
+          try {
+              xmlhttp.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+              xmlhttp.send(JSON.stringify(payload));
+          }
+          catch (e) {
+              console.log("ajax send failed");
+              callback(xmlhttp);
+
+          }
         }
 
 

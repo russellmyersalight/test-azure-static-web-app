@@ -6,7 +6,7 @@
       const userMessage = userInput.value.trim();
       if (userMessage !== '') {
 
-          var destUrl = getDestUrl(destination);
+          var destUrl = getDestUrl(destination, endpoint="generatetextnk");
           sendAjax(destUrl.website, destUrl.queryParams, ajaxReturned, method = "POST", payload = assemble_params(userMessage, chatHandle = chatHandle));
 
           appendMessage('You', userMessage);
@@ -78,9 +78,18 @@
     function ajaxReturned(xmlhttp) {
         var parsed = JSON.parse(xmlhttp.responseText);
         console.log('Got stuff. Result: ' + parsed["GeneratedText"]);
+        if (parsed["ResponseMessage"].startsWith("Error") && (parsed["GeneratedText"] == "")) {
+            parsed["GeneratedText"] = parsed["ResponseMessage"];
+        }
         botResponse(parsed["GeneratedText"]);
-        setChatHandle(parsed["Chat"]["ChatHandle"]);
-        setChatNum(parsed["Chat"]["ChatNum"]);
+        try {
+            setChatHandle(parsed["Chat"]["ChatHandle"]);
+            setChatNum(parsed["Chat"]["ChatNum"]);
+        }
+        catch (e) {
+            console.log("Failed to set chat handle and chat num. Parsed: " + parsed + " error: " + e);
+            parsed["Chat"] = {"ChatHandle": null, "ChatNum": null};
+        }
         showTechInfo(parsed);
         return parsed
 

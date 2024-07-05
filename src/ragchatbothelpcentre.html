@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Alight Help Centre Chatbot</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <!--link rel="stylesheet" type="text/css" href="./css/styles.css"-->
   <link rel="stylesheet" type="text/css" href="./css/ragchatstyles.css">
   <link rel="icon" href="./img/chatbot-ai-assist.png">
 </head>
@@ -18,7 +17,7 @@
           <div class="card-header">
             <div class="row">
               <div class="col-md-9">
-                  <span>Alight Help Centre Chatbot <small><small><small><button class="btn btn-sm btn-link" data-toggle="modal" data-target="#exampleModal" title="Show change log"><small><small>v0.1.4b</small></small></button></small></small></small></span>
+                  <span>Alight Help Centre Chatbot <small><small><small><button class="btn btn-sm btn-link" data-toggle="modal" data-target="#exampleModal" title="Show change log"><small><small>v0.1.4c</small></small></button></small></small></small></span>
               </div>
               <div class="col-md-2">
                 <button class="btn" id="tech-info-button" title="Show technical info"><img width="71" height="50" src="./img/chatbot_icon2.png"></img></button>
@@ -57,27 +56,18 @@
     </div>
       <div id="tech-info-div" class="col-md-3 tech-table-container border border-secondary" style='visibility: hidden'>
          <h4>Technical Info</h4>
-          <table class="table table-sm table-v-small-text">  <!--w-auto "-->
+          <table class="table table-sm table-v-small-text">
             <thead>
               <tr>
                 <th scope="col">Item</th>
                 <th scope="col">Value</th>
               </tr>
             </thead>
-            <tbody id="technical-table-body"> <!-- class="text-xsmall"-->
-
+            <tbody id="technical-table-body">
               <tr>
                 <th scope="row"></th>
                 <td><i>Please submit a query to show technical info</I></td>
               </tr>
-<!--              <tr>-->
-<!--                <th scope="row">2</th>-->
-<!--                <td>Jacob</td>-->
-<!--              </tr>-->
-<!--              <tr>-->
-<!--                <th scope="row">3</th>-->
-<!--                <td>Larry</td>-->
-<!--              </tr>-->
             </tbody>
           </table>
       </div>
@@ -88,7 +78,7 @@
 
 
 
-  <!-- Modal -->
+  <!-- Modal version log -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -130,6 +120,9 @@
           <b>v0.1.4b</b> (7/6/24)
           <br>
           - New version of backend LLM API (0.1.9) now merges citations for links which point to multiple different parts of the same document<br>
+          <b>v0.1.4c</b> (5/7/24)
+          <br>
+          - Handle case where chatbot hangs due to query violating Azure policies
 
 
         </div>

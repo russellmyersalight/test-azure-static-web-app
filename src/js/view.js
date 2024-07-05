@@ -20,7 +20,7 @@
         const typingEffect = setInterval(() => {
           messageElement.innerHTML += message[i];
           i++;
-          if (i === message.length) {
+          if (i >= message.length) {
             clearInterval(typingEffect);
             if (citations != null) {
               messageElement.innerHTML += ('<br>' + citations);
